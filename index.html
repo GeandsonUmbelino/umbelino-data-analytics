@@ -419,6 +419,8 @@
       color:#374151; transition:.2s;
     }
     .social-icon:hover { border-color:var(--brand-dark); color:var(--brand-dark); background:#fffbeb; }
+    .brand-logo { display: block; height: 54px; width: auto; }
+    .footer-brand { margin-bottom: 14px; }
     .testi-nav {
       position:absolute; top:50%; transform:translateY(-50%);
       width:42px; height:42px; border-radius:999px;
@@ -464,11 +466,7 @@
   <header>
     <div class="container nav">
       <a href="#home" class="brand" aria-label="Umbelino Data Analytics">
-        <div class="logo-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <div class="brand-text">
-          <strong>Umbelino</strong>
-          <small>Data Analytics</small>
-        </div>
+        <img src="./logo.png" alt="Umbelino Data Analytics" class="brand-logo" />
       </a>
       <nav aria-label="Principal">
         <ul>
@@ -917,12 +915,8 @@ msg['To'] = 'gestor@email.com'
   <footer>
     <div class="container footer-grid">
       <div>
-        <div class="brand" style="color:#111827; margin-bottom:14px;">
-          <div class="logo-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-          <div class="brand-text">
-            <strong>Umbelino</strong>
-            <small>Data Analytics</small>
-          </div>
+        <div class="brand footer-brand">
+          <img src="./logo.png" alt="Umbelino Data Analytics" class="brand-logo" />
         </div>
         <p style="margin:0; color:#6b7280; line-height:1.7; max-width:320px;">Transformo dados em decisões inteligentes e resultados reais.</p>
       </div>
