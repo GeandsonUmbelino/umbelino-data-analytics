@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Umbelino Data Analytics</title>
+  <meta name="description" content="Umbelino Data Analytics — dashboards, automação, BI e integração de dados para transformar seus dados em resultados reais." />
+  <link rel="canonical" href="https://umbelinodataanalytics.com.br" />
+
+  <!-- Open Graph / redes sociais -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://umbelinodataanalytics.com.br" />
+  <meta property="og:title" content="Umbelino Data Analytics" />
+  <meta property="og:description" content="Dashboards, automação, BI e integração de dados para transformar seus dados em resultados reais." />
+  <meta property="og:site_name" content="Umbelino Data Analytics" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Umbelino Data Analytics" />
+  <meta name="twitter:description" content="Dashboards, automação, BI e integração de dados para transformar seus dados em resultados reais." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0b1018;
+      --bg-dark-2: #111827;
+      --text: #0f172a;
+      --muted: #5b6472;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --border: #e5e7eb;
+      --brand: #facc15;
+      --brand-dark: #eab308;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --container: 1200px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fff 0%, #fffef9 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(var(--container), calc(100% - 40px)); margin: 0 auto; }
+    .section { padding: 56px 0; }
+    .eyebrow {
+      color: var(--brand-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(28px, 2vw, 38px);
+      margin: 0 0 30px;
+      font-weight: 800;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--brand);
+      margin: 12px auto 0;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(7, 10, 16, .92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #fff;
+      font-weight: 800;
+    }
+    .logo-mark {
+      width: 18px;
+      height: 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      align-items: end;
+    }
+    .logo-mark span {
+      display: block;
+      background: var(--brand);
+      border-radius: 999px;
+    }
+    .logo-mark span:nth-child(1){height: 10px}
+    .logo-mark span:nth-child(2){height: 18px}
+    .logo-mark span:nth-child(3){height: 24px}
+    .logo-mark span:nth-child(4){height: 14px}
+    .brand-text small { display:block; color: var(--brand); font-size: 24px; line-height: .85; }
+    .brand-text strong { display:block; font-size: 18px; line-height: 1.1; }
+    nav ul {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: rgba(255,255,255,.9);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 14px;
+      padding: 15px 22px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: .22s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-brand { background: var(--brand); color: #161616; }
+    .btn-brand:hover { background: var(--brand-dark); }
+    .btn-outline { color: #fff; border-color: rgba(255,255,255,.28); background: transparent; }
+    .btn-outline:hover { border-color: var(--brand); color: var(--brand); }
+    .hero {
+      background:
+        radial-gradient(circle at 78% 30%, rgba(250, 204, 21, .10), transparent 20%),
+        linear-gradient(180deg, #0a0f17 0%, #101826 100%);
+      color: #fff;
+      padding: 54px 0 44px;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 1.02;
+      margin: 0 0 18px;
+      max-width: 680px;
+    }
+    .hero h1 .accent { color: var(--brand); }
+    .hero p {
+      color: rgba(255,255,255,.8);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 610px;
+      margin: 0 0 28px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .metric {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: #fff;
+    }
+    .metric-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(250, 204, 21, .4);
+      display:flex; align-items:center; justify-content:center;
+      color: var(--brand);
+      font-size: 18px;
+      background: rgba(250,204,21,.05);
+    }
+    .metric strong { display:block; font-size: 28px; }
+    .metric span { color: rgba(255,255,255,.72); font-size: 13px; }
+    .hero-visual { position: relative; min-height: 560px; }
+    .laptop {
+      position: absolute;
+      inset: 18px 20px 70px 20px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #1a212d 0%, #0b1018 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 40px 90px rgba(0,0,0,.45);
+      padding: 24px;
+    }
+    .laptop::after {
+      content: "";
+      position: absolute;
+      left: 50%; bottom: -18px;
+      transform: translateX(-50%);
+      width: 88%; height: 22px;
+      border-radius: 0 0 28px 28px;
+      background: linear-gradient(180deg, #d1d5db, #9ca3af);
+      box-shadow: 0 8px 20px rgba(0,0,0,.35);
+    }
+    .screen {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #0d1420, #121d2f);
+      border: 1px solid rgba(255,255,255,.06);
+      padding: 24px;
+      overflow: hidden;
+    }
+    .screen-title { font-size: 16px; font-weight: 700; margin-bottom: 18px; }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .kpi {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .kpi small { display:block; color: rgba(255,255,255,.55); font-size: 11px; margin-bottom: 8px; }
+    .kpi strong { display:block; font-size: 22px; margin-bottom: 6px; }
+    .kpi span { color: #4ade80; font-size: 12px; font-weight: 700; }
+    .chart-area {
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+    .line-chart, .donut-card {
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .line-svg { width: 100%; height: 180px; }
+    .floating-card {
+      position: absolute;
+      border-radius: 18px;
+      background: rgba(13,19,31,.96);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 24px 50px rgba(0,0,0,.35);
+      padding: 16px 18px;
+      color: #fff;
+    }
+    .floating-left { left: -12px; bottom: 72px; width: 210px; }
+    .floating-right { right: -8px; top: 132px; width: 185px; }
+    .floating-left .row, .floating-right .row { display:flex; align-items:center; gap:12px; }
+    .floating-icon {
+      width: 42px; height: 42px; border-radius: 12px; background: rgba(250,204,21,.12);
+      display:flex; align-items:center; justify-content:center; color: var(--brand); font-size: 20px;
+    }
+    .progress {
+      margin-top: 14px;
+      height: 8px; border-radius: 999px; background: rgba(255,255,255,.08); overflow:hidden;
+    }
+    .progress span { display:block; width: 100%; height: 100%; background: linear-gradient(90deg, #22c55e, #84cc16); }
+    .floating-right ul { list-style:none; margin: 12px 0 0; padding:0; }
+    .floating-right li {
+      display:flex; align-items:center; gap:10px; padding:8px 0; color: rgba(255,255,255,.86); font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .floating-right li:last-child { border-bottom: 0; }
+    .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--brand); }
+    .light-section { padding: 54px 0; }
+    .grid-4 { display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 22px;
+    }
+    .icon-card { text-align:center; }
+    .icon-card .icon {
+      width: 66px; height: 66px; border-radius: 18px; margin: 0 auto 18px;
+      display:flex; align-items:center; justify-content:center;
+      color: #111827; font-size: 30px;
+      background: linear-gradient(180deg, #fffef5, #fff8db);
+      border: 1px solid #fde68a;
+    }
+    .icon-card h3 { margin: 0 0 10px; font-size: 21px; }
+    .icon-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .cases-head { display:flex; align-items:center; justify-content:space-between; gap: 16px; margin-bottom: 22px; }
+    .cases-head h2 { margin: 0; font-size: 34px; }
+    .link-arrow { font-weight: 700; color: #111827; }
+    .cases-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .case-card { padding: 0; overflow:hidden; }
+    .case-inner { display:grid; grid-template-columns: 1.05fr .95fr; min-height: 260px; }
+    .case-content { padding: 22px; }
+    .case-tag { color: var(--brand-dark); font-weight: 800; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+    .case-card h3 { margin: 10px 0 12px; font-size: 28px; }
+    .case-card p, .case-card li { color: var(--muted); line-height: 1.65; }
+    .case-card ul { padding-left: 18px; margin: 12px 0 18px; }
+    .badge-row { display:flex; flex-wrap:wrap; gap: 8px; margin: 12px 0 18px; }
+    .badge {
+      background: #f8fafc; border: 1px solid var(--border); color: #1f2937; border-radius: 999px;
+      padding: 8px 12px; font-size: 12px; font-weight: 700;
+    }
+    .case-media {
+      background: linear-gradient(180deg, #111827, #0f172a);
+      display:flex; align-items:center; justify-content:center; padding: 18px;
+    }
+    .dashboard-shot, .code-shot {
+      width: 100%; border-radius: 16px; overflow:hidden; border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+    }
+    .dashboard-shot {
+      background: linear-gradient(180deg, #fff, #f5f7fb);
+      padding: 16px;
+    }
+    .mini-kpis { display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+    .mini-kpis div { background:#eef2ff; padding:10px 8px; border-radius:12px; text-align:center; font-size:12px; color:#334155; font-weight:700; }
+    .chart-blocks { display:grid; grid-template-columns: 1.1fr .9fr; gap: 12px; }
+    .chart-panel, .pie-panel { background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:10px; }
+    .code-shot {
+      background: #0b1220;
+      color: #d1d5db;
+      padding: 18px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+    .tech-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+    .tech-grid {
+      display:grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 16px;
+      align-items:center;
+      text-align:center;
+    }
+    .tech-item {
+      display:flex; flex-direction:column; align-items:center; gap:10px; color:#1f2937; font-weight:700; font-size:13px;
+    }
+    .tech-logo {
+      width: 54px; height: 54px; border-radius: 16px; display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(180deg, #ffffff, #f3f4f6); border:1px solid var(--border); font-size:26px;
+    }
+    .about-grid { display:grid; grid-template-columns: 360px 1fr; gap: 36px; align-items:center; }
+    .profile-card {
+      background: linear-gradient(180deg, #111827, #0b1220);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 30px 60px rgba(2, 6, 23, .22);
+    }
+    .profile-card img {
+      width: 100%; height: auto; display: block;
+      border-radius: 18px;
+    }
+    .about-copy h2 { font-size: 48px; margin: 0 0 10px; }
+    .about-copy .role { font-size: 20px; font-weight: 700; color: #374151; margin-bottom: 18px; }
+    .about-copy p { color: var(--muted); line-height: 1.8; margin-bottom: 18px; }
+    .about-points { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0 26px; }
+    .point {
+      display:flex; gap:10px; align-items:flex-start; font-size:14px; color:#374151;
+    }
+    .point .mini { color: var(--brand-dark); font-size: 18px; }
+    .testimonials-wrap { position: relative; }
+    .testimonials { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .testimonial p { margin: 0 0 18px; color: var(--muted); line-height: 1.75; }
+    .person { display:flex; align-items:center; gap:12px; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 999px; background: linear-gradient(180deg, #facc15, #f59e0b);
+      color: #111827; font-weight:800; display:flex; align-items:center; justify-content:center;
+    }
+    .cta-panel {
+      background: linear-gradient(135deg, #0b1018, #111827);
+      color: #fff;
+      border-radius: 24px;
+      padding: 34px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items:center;
+    }
+    .cta-panel h2 { margin: 0 0 10px; font-size: 40px; }
+    .cta-panel p { margin: 0; color: rgba(255,255,255,.78); line-height: 1.7; }
+    .cta-actions { display:flex; gap: 12px; justify-content:flex-end; flex-wrap:wrap; }
+    .btn-dark-outline { background: transparent; border: 1px solid rgba(250,204,21,.48); color: #fff; }
+    .btn-dark-outline:hover { color: var(--brand); border-color: var(--brand); }
+    footer { padding: 36px 0 50px; }
+    .footer-grid {
+      display:grid; grid-template-columns: 1.1fr .55fr .4fr .5fr; gap: 28px; align-items:start;
+      border-top: 1px solid var(--border); padding-top: 28px;
+    }
+    .social-icons { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+    .social-icon {
+      width:40px; height:40px; border-radius:10px;
+      border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      color:#374151; transition:.2s;
+    }
+    .social-icon:hover { border-color:var(--brand-dark); color:var(--brand-dark); background:#fffbeb; }
+    .testi-nav {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:42px; height:42px; border-radius:999px;
+      background:#fff; border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:18px; color:#374151;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08); z-index:2;
+      -webkit-user-select:none; user-select:none; line-height:1;
+    }
+    .testi-prev { left:-22px; }
+    .testi-next { right:-22px; }
+    .btn-wa-icon { flex-shrink:0; }
+    .footer-nav-cont { margin-top:28px; }
+    footer h4 { margin: 0 0 14px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color:#374151; }
+    footer ul { list-style:none; margin:0; padding:0; display:grid; gap:10px; color:var(--muted); }
+    .copyright { text-align:center; color:#6b7280; font-size:13px; margin-top: 18px; }
+    @media (max-width: 1100px) {
+      nav ul { display:none; }
+      .hero-grid, .about-grid, .cta-panel, .cases-grid, .footer-grid { grid-template-columns: 1fr; }
+      .grid-4, .testimonials, .tech-grid, .about-points, .metrics { grid-template-columns: repeat(2, 1fr); }
+      .case-inner { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 520px; }
+      .cta-actions { justify-content:flex-start; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(var(--container), calc(100% - 24px)); }
+      .nav { height: 74px; }
+      .hero { padding-top: 34px; }
+      .hero h1 { font-size: 42px; }
+      .hero-visual { min-height: 410px; }
+      .laptop { inset: 10px 0 50px 0; }
+      .floating-left { left: 0; bottom: 38px; width: 180px; }
+      .floating-right { right: 0; top: 92px; width: 160px; }
+      .kpis, .grid-4, .testimonials, .tech-grid, .about-points, .metrics { grid-template-columns: 1fr; }
+      .section-title, .cases-head h2, .about-copy h2, .cta-panel h2 { font-size: 30px; }
+      .brand-text strong { font-size: 15px; }
+      .brand-text small { font-size: 20px; }
+      .tech-grid { gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#home" class="brand" aria-label="Umbelino Data Analytics">
+        <div class="logo-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="brand-text">
+          <strong>Umbelino</strong>
+          <small>Data Analytics</small>
+        </div>
+      </a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#ferramentas">Ferramentas</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-brand" href="https://wa.me/5571991033809" target="_blank" rel="noopener noreferrer">Falar no WhatsApp <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="btn-wa-icon"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Transformo dados em resultados</div>
+          <h1>Seus dados estão trabalhando para você ou apenas <span class="accent">ocupando espaço?</span></h1>
+          <p>Ajudo empresas a automatizar processos, centralizar informações e criar dashboards que aceleram decisões e aumentam resultados.</p>
+          <div class="hero-actions">
+            <a class="btn btn-brand" href="#contato">Solicitar diagnóstico gratuito &nbsp;→</a>
+            <a class="btn btn-outline" href="#projetos">Ver projetos</a>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-icon">📁</div>
+              <div><strong>10+</strong><span>Projetos entregues</span></div>
+            </div>
+            <div class="metric">
+              <div class="metric-icon">⏱</div>
+              <div><strong>1000+</strong><span>Horas economizadas</span></div>
+            </div>
+            <div class="metric">
+              <div class="metric-icon">⚙</div>
+              <div><strong>8+</strong><span>Tecnologias</span></div>
+            </div>
+            <div class="metric">
+              <div class="metric-icon">🏅</div>
+              <div><strong>3+</strong><span>Anos de experiência</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="laptop">
+            <div class="screen">
+              <div class="screen-title">Dashboard Comercial</div>
+              <div class="kpis">
+                <div class="kpi"><small>Faturamento</small><strong>R$ 1,45M</strong><span>+12,8%</span></div>
+                <div class="kpi"><small>Vendas</small><strong>8.342</strong><span>+9,4%</span></div>
+                <div class="kpi"><small>Ticket Médio</small><strong>R$ 174,05</strong><span>+4,7%</span></div>
+                <div class="kpi"><small>Conversão</small><strong>3,27%</strong><span>+0,5%</span></div>
+              </div>
+              <div class="chart-area">
+                <div class="line-chart">
+                  <div style="color:rgba(255,255,255,.62);font-size:12px;margin-bottom:10px;">Faturamento ao longo do tempo</div>
+                  <svg class="line-svg" viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 148H420" stroke="rgba(255,255,255,.08)" />
+                    <path d="M0 108C30 102 44 72 70 78C95 84 111 132 140 120C173 106 182 54 214 62C248 70 252 135 290 128C327 121 338 78 362 83C387 88 398 112 420 70" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M0 108C30 102 44 72 70 78C95 84 111 132 140 120C173 106 182 54 214 62C248 70 252 135 290 128C327 121 338 78 362 83C387 88 398 112 420 70V180H0V108Z" fill="url(#grad)" opacity="0.45"/>
+                    <defs>
+                      <linearGradient id="grad" x1="210" y1="0" x2="210" y2="180" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#38bdf8" stop-opacity="0.5"/>
+                        <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="donut-card">
+                  <div style="color:rgba(255,255,255,.62);font-size:12px;margin-bottom:10px;">Vendas por Região</div>
+                  <svg viewBox="0 0 180 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="90" cy="90" r="50" stroke="#1f2937" stroke-width="28" fill="none"/>
+                    <circle cx="90" cy="90" r="50" stroke="#f59e0b" stroke-width="28" stroke-dasharray="120 314" stroke-linecap="round" fill="none" transform="rotate(-90 90 90)"/>
+                    <circle cx="90" cy="90" r="50" stroke="#60a5fa" stroke-width="28" stroke-dasharray="75 314" stroke-dashoffset="-126" stroke-linecap="round" fill="none" transform="rotate(-90 90 90)"/>
+                    <circle cx="90" cy="90" r="50" stroke="#a78bfa" stroke-width="28" stroke-dasharray="48 314" stroke-dashoffset="-206" stroke-linecap="round" fill="none" transform="rotate(-90 90 90)"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-card floating-left">
+            <div class="row">
+              <div class="floating-icon">🐍</div>
+              <div>
+                <strong style="display:block">Automação</strong>
+                <span style="color:rgba(255,255,255,.66);font-size:14px;">Python + BI + ETL</span>
+              </div>
+            </div>
+            <div class="progress"><span></span></div>
+            <div style="margin-top:8px;color:#4ade80;font-size:13px;font-weight:700;">Processos automatizados com segurança</div>
+          </div>
+          <div class="floating-card floating-right">
+            <strong style="display:block">Conectores</strong>
+            <ul>
+              <li><span class="dot"></span> Excel</li>
+              <li><span class="dot"></span> SQL Server</li>
+              <li><span class="dot"></span> PostgreSQL</li>
+              <li><span class="dot"></span> APIs</li>
+              <li><span class="dot"></span> Google Sheets</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="light-section">
+      <div class="container">
+        <h2 class="section-title">Problemas que eu resolvo</h2>
+        <div class="grid-4">
+          <article class="card icon-card">
+            <div class="icon">📊</div>
+            <h3>Planilhas espalhadas</h3>
+            <p>Dados em vários arquivos, sem controle e com risco de erros constantes.</p>
+          </article>
+          <article class="card icon-card">
+            <div class="icon">🕒</div>
+            <h3>Relatórios manuais</h3>
+            <p>Horas perdidas toda semana para reunir, tratar e montar relatórios.</p>
+          </article>
+          <article class="card icon-card">
+            <div class="icon">📈</div>
+            <h3>Indicadores sem visibilidade</h3>
+            <p>Gestão sem números confiáveis dificulta decisões e gera oportunidades perdidas.</p>
+          </article>
+          <article class="card icon-card">
+            <div class="icon">⚙️</div>
+            <h3>Processos repetitivos</h3>
+            <p>Tarefas que poderiam ser automatizadas ainda consomem tempo e recursos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="light-section" id="servicos" style="padding-top: 18px;">
+      <div class="container">
+        <h2 class="section-title">Serviços</h2>
+        <div class="grid-4">
+          <article class="card icon-card">
+            <div class="icon">📉</div>
+            <h3>Dashboards &amp; Power BI</h3>
+            <p>Dashboards interativos e indicadores que trazem clareza e agilidade para sua gestão.</p>
+          </article>
+          <article class="card icon-card">
+            <div class="icon">&lt;/&gt;</div>
+            <h3>Automação com Python</h3>
+            <p>Automação de relatórios, tratamento de dados e integração entre sistemas.</p>
+          </article>
+          <article class="card icon-card">
+            <div class="icon">🗄️</div>
+            <h3>ETL &amp; Integração de Dados</h3>
+            <p>Conexão entre fontes de dados, limpeza, transformação e modelagem analítica.</p>
+          </article>
+          <article class="card icon-card">
+            <div class="icon">🎯</div>
+            <h3>Consultoria Analítica</h3>
+            <p>Análise de dados e suporte estratégico para transformar informações em resultados.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projetos">
+      <div class="container">
+        <div class="cases-head">
+          <h2>Casos de sucesso</h2>
+          <a class="link-arrow" href="#contato">Ver todos os projetos →</a>
+        </div>
+        <div class="cases-grid">
+          <article class="card case-card">
+            <div class="case-inner">
+              <div class="case-content">
+                <div class="case-tag">Dashboard · Power BI</div>
+                <h3>Dashboards &amp; Vendas</h3>
+                <p>Empresa do varejo com relatórios manuais e demorados em Excel.</p>
+                <p><strong>Solução:</strong> Dashboard automatizado com Power BI integrado ao banco de dados.</p>
+                <p><strong>Resultado:</strong></p>
+                <ul>
+                  <li>90% menos tempo na geração de relatórios.</li>
+                  <li>Dados atualizados em tempo real.</li>
+                  <li>Mais agilidade nas decisões comerciais.</li>
+                </ul>
+                <div class="badge-row">
+                  <span class="badge">Power BI</span>
+                  <span class="badge">SQL</span>
+                  <span class="badge">Excel</span>
+                </div>
+                <a class="link-arrow" href="#contato">Ver projeto →</a>
+              </div>
+              <div class="case-media">
+                <div class="dashboard-shot">
+                  <div class="mini-kpis">
+                    <div>R$ 1,2M</div>
+                    <div>4,2%</div>
+                    <div>32k</div>
+                    <div>98%</div>
+                  </div>
+                  <div class="chart-blocks">
+                    <div class="chart-panel">
+                      <svg viewBox="0 0 260 150" width="100%" height="90" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="260" height="150" rx="14" fill="#ffffff"/>
+                        <path d="M18 118L55 92L82 97L112 56L142 70L174 48L205 62L240 38" stroke="#60a5fa" stroke-width="4" fill="none" stroke-linecap="round"/>
+                        <path d="M18 118L55 92L82 97L112 56L142 70L174 48L205 62L240 38V130H18V118Z" fill="#dbeafe"/>
+                      </svg>
+                    </div>
+                    <div class="pie-panel">
+                      <svg viewBox="0 0 150 150" width="100%" height="90" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="75" cy="75" r="34" stroke="#e5e7eb" stroke-width="22" fill="none"/>
+                        <circle cx="75" cy="75" r="34" stroke="#f59e0b" stroke-width="22" stroke-dasharray="60 213" fill="none" transform="rotate(-90 75 75)"/>
+                        <circle cx="75" cy="75" r="34" stroke="#60a5fa" stroke-width="22" stroke-dasharray="44 213" stroke-dashoffset="-68" fill="none" transform="rotate(-90 75 75)"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card case-card">
+            <div class="case-inner">
+              <div class="case-content">
+                <div class="case-tag">Automação · Python</div>
+                <h3>Automação de Relatórios</h3>
+                <p>Relatórios semanais enviados manualmente para gestores.</p>
+                <p><strong>Solução:</strong> Automação em Python para coleta, tratamento e envio automático por e-mail.</p>
+                <p><strong>Resultado:</strong></p>
+                <ul>
+                  <li>Relatórios 100% automáticos.</li>
+                  <li>Economia de 4 horas semanais.</li>
+                  <li>Processo escalável e seguro.</li>
+                </ul>
+                <div class="badge-row">
+                  <span class="badge">Python</span>
+                  <span class="badge">Pandas</span>
+                  <span class="badge">SMTP</span>
+                  <span class="badge">Excel</span>
+                </div>
+                <a class="link-arrow" href="#contato">Ver projeto →</a>
+              </div>
+              <div class="case-media">
+                <div class="code-shot">import pandas as pd
+import smtplib
+from email.mime.text import MIMEText
+
+# carregar dados
+vendas = pd.read_excel('dados.xlsx')
+
+# resumo
+resumo = vendas.groupby('regiao')['valor'].sum()
+
+# gerar html
+tabela = resumo.to_frame('faturamento')
+
+msg = MIMEText(tabela.to_html(), 'html')
+msg['Subject'] = 'Relatório semanal'
+msg['From'] = 'analytics@email.com'
+msg['To'] = 'gestor@email.com'
+
+# envio de relatório</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ferramentas" style="padding-top: 10px;">
+      <div class="container">
+        <h2 class="section-title">Tecnologias que utilizo</h2>
+        <div class="tech-box">
+          <div class="tech-grid">
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <rect x="0" y="17" width="5" height="9" rx="1.5" fill="#F2C811"/>
+                  <rect x="7" y="11" width="5" height="15" rx="1.5" fill="#F2C811"/>
+                  <rect x="14" y="4" width="5" height="22" rx="1.5" fill="#F2C811"/>
+                  <rect x="21" y="0" width="5" height="26" rx="1.5" fill="#F2C811"/>
+                </svg>
+              </div><span>Power BI</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <rect x="2" y="2" width="22" height="10" rx="5" fill="#3776AB"/>
+                  <rect x="2" y="14" width="22" height="10" rx="5" fill="#FFD343"/>
+                  <circle cx="9" cy="7" r="2" fill="white"/>
+                  <circle cx="17" cy="19" r="2" fill="white"/>
+                </svg>
+              </div><span>Python</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <ellipse cx="13" cy="6" rx="9" ry="3.5" fill="#CC2927"/>
+                  <rect x="4" y="6" width="18" height="5" fill="#CC2927"/>
+                  <ellipse cx="13" cy="11" rx="9" ry="3.5" fill="#e03634"/>
+                  <rect x="4" y="11" width="18" height="5" fill="#e03634"/>
+                  <ellipse cx="13" cy="16" rx="9" ry="3.5" fill="#e84e4b"/>
+                  <rect x="4" y="16" width="18" height="4" fill="#e84e4b"/>
+                  <ellipse cx="13" cy="20" rx="9" ry="3.5" fill="#f05250"/>
+                </svg>
+              </div><span>SQL Server</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <ellipse cx="13" cy="11" rx="9" ry="9" fill="#336791"/>
+                  <ellipse cx="13" cy="11" rx="4" ry="4" fill="white"/>
+                  <path d="M4 13Q1 21 4 25" stroke="#336791" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <path d="M9 2Q13 0 17 2" stroke="#336791" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div><span>PostgreSQL</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <rect x="1" y="1" width="24" height="24" rx="4" fill="#217346"/>
+                  <path d="M7 7L19 19M19 7L7 19" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+              </div><span>Excel</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <rect x="3" y="2" width="7" height="22" rx="3.5" fill="#150458"/>
+                  <rect x="16" y="2" width="7" height="22" rx="3.5" fill="#150458"/>
+                  <rect x="3" y="10" width="20" height="6" fill="#E70488"/>
+                </svg>
+              </div><span>Pandas</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <path d="M13 1L25 13L13 25L1 13Z" fill="#742774"/>
+                  <polygon points="9,13 14,7 20,13 14,19" fill="white" opacity="0.88"/>
+                  <circle cx="14" cy="13" r="2.5" fill="#742774"/>
+                </svg>
+              </div><span>Power Automate</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <circle cx="21" cy="5" r="4" fill="#F05032"/>
+                  <circle cx="5" cy="13" r="4" fill="#F05032"/>
+                  <circle cx="21" cy="21" r="4" fill="#F05032"/>
+                  <line x1="9" y1="11" x2="17" y2="7" stroke="#F05032" stroke-width="2.5"/>
+                  <line x1="9" y1="15" x2="17" y2="19" stroke="#F05032" stroke-width="2.5"/>
+                </svg>
+              </div><span>Git</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <rect x="1" y="11" width="5" height="4" rx="1" fill="#2496ED"/>
+                  <rect x="8" y="11" width="5" height="4" rx="1" fill="#2496ED"/>
+                  <rect x="15" y="11" width="5" height="4" rx="1" fill="#2496ED"/>
+                  <rect x="8" y="6" width="5" height="4" rx="1" fill="#2496ED"/>
+                  <rect x="15" y="6" width="5" height="4" rx="1" fill="#2496ED"/>
+                  <path d="M1 16Q13 24 25 16" stroke="#2496ED" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div><span>Docker</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-logo">
+                <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                  <path d="M13 1L7 15H1L13 26L21 13Z" fill="#0078D4" opacity="0.8"/>
+                  <path d="M13 1L25 26H13L19 13Z" fill="#0078D4"/>
+                </svg>
+              </div><span>Azure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre" style="padding-top: 8px;">
+      <div class="container about-grid">
+        <div class="profile-card">
+          <img src="./public/foto.jpeg" alt="Foto de Geandson Umbelino" width="800" height="800" loading="lazy" />
+        </div>
+        <div class="about-copy">
+          <div class="eyebrow">Sobre mim</div>
+          <h2>Geandson Umbelino Cavalcante</h2>
+          <div class="role">Analista de Sistemas | Especialista em Dados, BI e Automação</div>
+          <p>Atuo ajudando empresas a transformar dados em decisões inteligentes. Combino visão de negócio com tecnologia para criar soluções que reduzem trabalho manual, aumentam a produtividade e geram resultados reais.</p>
+          <p>Minha atuação envolve dashboards, automação de relatórios, integração de dados e suporte analítico para que gestores tenham mais clareza, agilidade e confiança na tomada de decisão.</p>
+          <div class="about-points">
+            <div class="point"><div class="mini">🏅</div><div><strong>3+ anos</strong><br>de experiência</div></div>
+            <div class="point"><div class="mini">📈</div><div><strong>Foco em</strong><br>resultados</div></div>
+            <div class="point"><div class="mini">🧩</div><div><strong>Soluções</strong><br>personalizadas</div></div>
+            <div class="point"><div class="mini">✅</div><div><strong>Compromisso</strong><br>com qualidade</div></div>
+          </div>
+          <a class="btn btn-brand" href="#contato">Conhecer mais sobre mim</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container testimonials-wrap">
+        <h2 class="section-title">O que meus clientes dizem</h2>
+        <button type="button" class="testi-nav testi-prev" aria-label="Anterior">&#8249;</button>
+        <div class="testimonials">
+          <article class="card testimonial">
+            <p>“O Geandson automatizou um processo que levava horas e hoje temos relatórios precisos em poucos minutos. Excelente profissional.”</p>
+            <div class="person">
+              <div class="avatar">CM</div>
+              <div><strong>Carlos Mendes</strong><br><span style="color:#6b7280">Gerente Comercial</span></div>
+            </div>
+          </article>
+          <article class="card testimonial">
+            <p>“Profissional dedicado, atencioso e com muito conhecimento. Entregou além do que esperávamos.”</p>
+            <div class="person">
+              <div class="avatar">JL</div>
+              <div><strong>Juliana Lima</strong><br><span style="color:#6b7280">Coordenadora Financeira</span></div>
+            </div>
+          </article>
+          <article class="card testimonial">
+            <p>“As automações e dashboards criados por ele mudaram nossa rotina e nos ajudaram a tomar decisões muito melhores.”</p>
+            <div class="person">
+              <div class="avatar">RA</div>
+              <div><strong>Ricardo Alves</strong><br><span style="color:#6b7280">Diretor de Operações</span></div>
+            </div>
+          </article>
+        </div>
+        <button type="button" class="testi-nav testi-next" aria-label="Próximo">&#8250;</button>
+      </div>
+    </section>
+
+    <section class="section" id="contato">
+      <div class="container">
+        <div class="cta-panel">
+          <div>
+            <h2>Pronto para transformar seus dados em resultados reais?</h2>
+            <p>Vamos conversar sobre seu projeto e encontrar a melhor solução para o seu negócio.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-brand" href="https://wa.me/5571991033809" target="_blank" rel="noopener noreferrer">Falar no WhatsApp <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="btn-wa-icon"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+            <a class="btn btn-dark-outline" href="mailto:geandson.umbelino@gmail.com">Enviar e-mail <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="btn-wa-icon"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="brand" style="color:#111827; margin-bottom:14px;">
+          <div class="logo-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <div class="brand-text">
+            <strong>Umbelino</strong>
+            <small>Data Analytics</small>
+          </div>
+        </div>
+        <p style="margin:0; color:#6b7280; line-height:1.7; max-width:320px;">Transformo dados em decisões inteligentes e resultados reais.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="footer-nav-cont">
+          <li><a href="#ferramentas">Ferramentas</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Redes</h4>
+        <div class="social-icons">
+          <a class="social-icon" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a class="social-icon" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a class="social-icon" href="https://wa.me/5571991033809" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a class="social-icon" href="mailto:geandson.umbelino@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright">© 2025 Umbelino Data Analytics. Todos os direitos reservados.</div>
+  </footer>
+</body>
+</html>
